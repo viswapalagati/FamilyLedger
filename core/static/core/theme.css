@@ -1,0 +1,247 @@
+/* ==========================================================================
+   FamilyLedger theme — a calm, modern finance UI layered over Bootstrap 5.
+   Semantic colours are defined once here and reused by charts and badges.
+   ========================================================================== */
+
+:root {
+  --fl-bg: #f4f6fb;
+  --fl-surface: #ffffff;
+  --fl-surface-2: #f8fafc;
+  --fl-border: #e5e9f2;
+  --fl-text: #1f2733;
+  --fl-text-muted: #66738a;
+  --fl-heading: #0f172a;
+
+  --fl-brand: #4338ca;
+  --fl-brand-strong: #3730a3;
+  --fl-brand-soft: #eef2ff;
+
+  --fl-income: #15a06a;
+  --fl-income-soft: #e5f6ee;
+  --fl-expense: #e0413d;
+  --fl-expense-soft: #fdeceb;
+  --fl-review: #d98a10;
+  --fl-review-soft: #fcf1dd;
+  --fl-asset: #475569;
+  --fl-asset-soft: #eef1f5;
+
+  --fl-shadow-sm: 0 1px 2px rgba(15, 23, 42, .06), 0 1px 3px rgba(15, 23, 42, .04);
+  --fl-shadow-md: 0 6px 24px rgba(15, 23, 42, .08);
+  --fl-radius: 16px;
+  --fl-radius-sm: 10px;
+
+  --fl-sidebar-w: 250px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fl-bg: #0b0f19;
+    --fl-surface: #131a2a;
+    --fl-surface-2: #0f1524;
+    --fl-border: #232c40;
+    --fl-text: #dbe2ef;
+    --fl-text-muted: #8b97ae;
+    --fl-heading: #f1f5ff;
+    --fl-brand: #8b8bf5;
+    --fl-brand-strong: #a5a5ff;
+    --fl-brand-soft: #1b2138;
+    --fl-income-soft: #10261d;
+    --fl-expense-soft: #2a1514;
+    --fl-review-soft: #2a2011;
+    --fl-asset-soft: #1a2130;
+    --fl-shadow-md: 0 6px 24px rgba(0, 0, 0, .4);
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--fl-bg);
+  color: var(--fl-text);
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+h1, h2, h3, h4, h5, h6 { color: var(--fl-heading); font-weight: 650; letter-spacing: -.01em; }
+a { color: var(--fl-brand); text-decoration: none; }
+a:hover { color: var(--fl-brand-strong); }
+.text-muted, .small-muted { color: var(--fl-text-muted) !important; }
+
+/* ----- Layout shell ----------------------------------------------------- */
+.fl-shell { display: flex; min-height: 100vh; }
+
+.fl-sidebar {
+  width: var(--fl-sidebar-w);
+  flex: 0 0 var(--fl-sidebar-w);
+  background: linear-gradient(180deg, var(--fl-brand-strong), #2b2496 60%, #211d78);
+  color: #dfe3ff;
+  padding: 22px 16px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+.fl-brand {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 750; font-size: 1.15rem; color: #fff;
+  padding: 4px 8px 18px;
+}
+.fl-brand .dot { width: 12px; height: 12px; border-radius: 50%; background: #7ef3c0; box-shadow: 0 0 0 4px rgba(126, 243, 192, .18); }
+.fl-nav { list-style: none; padding: 0; margin: 8px 0 0; }
+.fl-nav li { margin: 2px 0; }
+.fl-nav a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 10px;
+  color: #cdd2ff; font-weight: 500;
+}
+.fl-nav a:hover { background: rgba(255, 255, 255, .09); color: #fff; }
+.fl-nav a.active { background: rgba(255, 255, 255, .16); color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+.fl-nav .group-label {
+  text-transform: uppercase; font-size: .68rem; letter-spacing: .12em;
+  color: #9aa0e0; padding: 16px 12px 6px;
+}
+
+.fl-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
+.fl-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding: 16px 28px;
+  background: var(--fl-surface);
+  border-bottom: 1px solid var(--fl-border);
+  position: sticky; top: 0; z-index: 20;
+}
+.fl-topbar .crumb { font-weight: 600; color: var(--fl-heading); }
+.fl-content { padding: 26px 28px 56px; flex: 1; }
+.fl-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--fl-brand-soft); color: var(--fl-brand-strong);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: .85rem;
+}
+
+/* ----- Cards & tiles -------------------------------------------------- */
+.fl-card {
+  background: var(--fl-surface);
+  border: 1px solid var(--fl-border);
+  border-radius: var(--fl-radius);
+  box-shadow: var(--fl-shadow-sm);
+  padding: 20px;
+}
+.fl-card h2, .fl-card h3 { margin-top: 0; }
+.fl-card-title { font-size: .95rem; font-weight: 650; margin-bottom: 14px; color: var(--fl-heading); }
+
+.fl-stat {
+  background: var(--fl-surface);
+  border: 1px solid var(--fl-border);
+  border-radius: var(--fl-radius);
+  box-shadow: var(--fl-shadow-sm);
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.fl-stat .label { font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--fl-text-muted); }
+.fl-stat .value { font-size: 1.7rem; font-weight: 750; color: var(--fl-heading); margin-top: 6px; }
+.fl-stat .sub { font-size: .82rem; color: var(--fl-text-muted); margin-top: 2px; }
+.fl-stat::after {
+  content: ""; position: absolute; right: -30px; top: -30px;
+  width: 90px; height: 90px; border-radius: 50%; opacity: .12;
+  background: var(--fl-brand);
+}
+.fl-stat.income::after { background: var(--fl-income); }
+.fl-stat.expense::after { background: var(--fl-expense); }
+.fl-stat.review::after { background: var(--fl-review); }
+.fl-stat.asset::after { background: var(--fl-asset); }
+
+/* ----- Semantic helpers -------------------------------------------- */
+.amount-pos { color: var(--fl-income); font-weight: 600; }
+.amount-neg { color: var(--fl-expense); font-weight: 600; }
+.amount-zero { color: var(--fl-text-muted); }
+
+.badge-income { background: var(--fl-income-soft); color: var(--fl-income); }
+.badge-expense { background: var(--fl-expense-soft); color: var(--fl-expense); }
+.badge-review { background: var(--fl-review-soft); color: var(--fl-review); }
+.badge-asset { background: var(--fl-asset-soft); color: var(--fl-asset); }
+.fl-badge {
+  display: inline-block; padding: 3px 10px; border-radius: 999px;
+  font-size: .74rem; font-weight: 650; letter-spacing: .02em;
+}
+
+/* ----- Tables ------------------------------------------------------- */
+.fl-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+.fl-table th {
+  text-align: left; font-size: .74rem; text-transform: uppercase; letter-spacing: .07em;
+  color: var(--fl-text-muted); padding: 10px 14px; border-bottom: 1px solid var(--fl-border);
+}
+.fl-table td { padding: 12px 14px; border-bottom: 1px solid var(--fl-border); }
+.fl-table tbody tr:last-child td, .fl-table tr:last-child td { border-bottom: none; }
+.fl-table tbody tr:hover { background: var(--fl-surface-2); }
+.fl-table-wrap { overflow-x: auto; border-radius: var(--fl-radius); border: 1px solid var(--fl-border); background: var(--fl-surface); }
+
+/* ----- Forms ------------------------------------------------------ */
+.form-control, .form-select {
+  border-radius: var(--fl-radius-sm);
+  border: 1px solid var(--fl-border);
+  background: var(--fl-surface);
+  color: var(--fl-text);
+  padding: .55rem .8rem;
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--fl-brand);
+  box-shadow: 0 0 0 .2rem var(--fl-brand-soft);
+  background: var(--fl-surface);
+  color: var(--fl-text);
+}
+label, .form-label { font-weight: 600; color: var(--fl-heading); font-size: .88rem; }
+.form-text { color: var(--fl-text-muted); }
+
+.btn-brand { background: var(--fl-brand); border-color: var(--fl-brand); color: #fff; font-weight: 600; }
+.btn-brand:hover { background: var(--fl-brand-strong); border-color: var(--fl-brand-strong); color: #fff; }
+.btn-soft { background: var(--fl-brand-soft); border: 1px solid var(--fl-border); color: var(--fl-brand-strong); font-weight: 600; }
+.btn-soft:hover { background: var(--fl-surface-2); color: var(--fl-brand-strong); }
+
+/* ----- Segmented control (scope / period) ------------------------ */
+.fl-segment { display: inline-flex; background: var(--fl-surface-2); border: 1px solid var(--fl-border); border-radius: 999px; padding: 3px; gap: 2px; flex-wrap: wrap; }
+.fl-segment a {
+  padding: 6px 14px; border-radius: 999px; font-size: .84rem; font-weight: 600;
+  color: var(--fl-text-muted);
+}
+.fl-segment a.active { background: var(--fl-surface); color: var(--fl-brand-strong); box-shadow: var(--fl-shadow-sm); }
+
+/* ----- Auth screens -------------------------------------------- */
+.fl-auth {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  background: radial-gradient(1200px 600px at 10% -10%, #6d5ef0 0%, transparent 55%),
+              radial-gradient(1000px 500px at 110% 10%, #12b981 0%, transparent 45%),
+              var(--fl-bg);
+}
+.fl-auth-card { width: 100%; max-width: 460px; background: var(--fl-surface); border: 1px solid var(--fl-border); border-radius: 22px; box-shadow: var(--fl-shadow-md); padding: 34px; }
+.fl-auth-card.wide { max-width: 680px; }
+
+/* ----- Misc --------------------------------------------------- */
+.fl-grid { display: grid; gap: 18px; }
+.fl-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+.fl-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.fl-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.fl-section-title { font-size: 1.05rem; font-weight: 700; margin: 26px 0 12px; }
+.fl-empty { text-align: center; color: var(--fl-text-muted); padding: 40px 20px; }
+.fl-chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.fl-progress { height: 8px; background: var(--fl-surface-2); border-radius: 999px; overflow: hidden; }
+.fl-progress > span { display: block; height: 100%; background: var(--fl-brand); }
+
+@media (max-width: 992px) {
+  .fl-grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
+  .fl-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 820px) {
+  .fl-sidebar { position: fixed; left: 0; top: 0; transform: translateX(-100%); transition: transform .2s ease; z-index: 60; }
+  .fl-sidebar.open { transform: translateX(0); }
+  .fl-shell.nav-open::after { content: ""; position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 55; }
+  .fl-menu-toggle { display: inline-flex !important; }
+}
+@media (max-width: 620px) {
+  .fl-grid.cols-4, .fl-grid.cols-3, .fl-grid.cols-2 { grid-template-columns: 1fr; }
+  .fl-content, .fl-topbar { padding-left: 16px; padding-right: 16px; }
+}
+.fl-menu-toggle { display: none; }

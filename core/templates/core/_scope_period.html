@@ -1,0 +1,41 @@
+{% comment %}
+Shared scope + period filter bar. Expects in context a ``filter_ctx`` dict:
+  scope_choices  -> list of (value, label)
+  scope          -> current scope value
+  period_choices -> list of (value, label)
+  period         -> current period value
+  anchor         -> ISO date string
+  period_label   -> resolved human label
+  extra          -> list of (name, value) hidden inputs to preserve
+{% endcomment %}
+<div class="fl-card mb-3">
+  <form method="get" class="row g-3 align-items-end">
+    {% for name, value in filter_ctx.extra %}
+      <input type="hidden" name="{{ name }}" value="{{ value }}">
+    {% endfor %}
+    <div class="col-sm-4 col-md-3">
+      <label class="form-label">Scope</label>
+      <select name="scope" class="form-select" data-autosubmit>
+        {% for value, label in filter_ctx.scope_choices %}
+          <option value="{{ value }}" {% if value == filter_ctx.scope %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-sm-4 col-md-3">
+      <label class="form-label">Period</label>
+      <select name="period" class="form-select" data-autosubmit>
+        {% for value, label in filter_ctx.period_choices %}
+          <option value="{{ value }}" {% if value == filter_ctx.period %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-sm-4 col-md-3">
+      <label class="form-label">Anchor date</label>
+      <input type="date" name="anchor" value="{{ filter_ctx.anchor }}" class="form-control" data-autosubmit>
+    </div>
+    <div class="col-md-3 text-md-end">
+      <div class="small-muted">Showing</div>
+      <div style="font-weight:700;font-size:1.05rem;">{{ filter_ctx.period_label }}</div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,16 @@
+Hi {{ member.full_name }},
+
+{{ added_by.full_name }} has added you to the "{{ family.name }}" family on
+FamilyLedger and created a login for you.
+
+Sign in here: {{ login_url }}
+Your username is your email address: {{ member.email }}
+
+For security, your password is not included in this email. {{ added_by.full_name }}
+will share it with you separately, or you can set your own password here:
+{{ reset_url }}
+
+Once you're in, you can record income and expenses, register your bank
+accounts and assets, and see the whole family's finances.
+
+— FamilyLedger

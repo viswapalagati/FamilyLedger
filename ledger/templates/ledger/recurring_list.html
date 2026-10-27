@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load ledger_extras %}
+{% block title %}Recurring entries · FamilyLedger{% endblock %}
+{% block page_title %}Recurring entries{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <p class="text-muted mb-0">Salaries, rent, SIPs — created automatically on each due date.</p>
+  <a href="{% url 'ledger:recurring_add' %}" class="btn btn-brand btn-sm">+ New schedule</a>
+</div>
+
+<div class="fl-table-wrap">
+  <table class="fl-table">
+    <thead>
+      <tr><th>Member</th><th>Type</th><th>Head</th><th>Amount</th><th>Frequency</th><th>Next run</th><th>Status</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for r in templates %}
+        <tr>
+          <td>{{ r.member.full_name }}</td>
+          <td><span class="fl-badge {% if r.txn_type == 'income' %}badge-income{% else %}badge-expense{% endif %}">{{ r.get_txn_type_display }}</span></td>
+          <td>{{ r.account_head.name }}</td>
+          <td>{{ r.amount|rupees }}</td>
+          <td>{{ r.get_frequency_display }}</td>
+          <td>{{ r.next_run_date|date:"d M Y" }}</td>
+          <td>{% if r.is_active %}<span class="fl-badge badge-income">Active</span>{% else %}<span class="fl-badge badge-asset">Paused</span>{% endif %}</td>
+          <td class="text-end">
+            <a href="{% url 'ledger:recurring_edit' r.pk %}" class="btn btn-soft btn-sm">Edit</a>
+            <a href="{% url 'ledger:recurring_delete' r.pk %}" class="btn btn-soft btn-sm">Delete</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="8" class="fl-empty">No recurring entries yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<p class="small-muted mt-3">Run <code>python manage.py generate_recurring</code> on a schedule to materialise due entries.</p>
+{% endblock %}

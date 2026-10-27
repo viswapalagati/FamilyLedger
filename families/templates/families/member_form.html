@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Add member · FamilyLedger{% endblock %}
+{% block page_title %}Add a family member{% endblock %}
+
+{% block content %}
+<div class="fl-card" style="max-width:720px;">
+  <div class="fl-card-title">New member</div>
+  <p class="text-muted">Provide their details and relationship. Choose whether they
+    get a login now — you can always add one later. The password is set by you and
+    is <strong>not</strong> included in the notification email.</p>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-7">{{ form.full_name|as_crispy_field }}</div>
+      <div class="col-md-5">{{ form.relationship|as_crispy_field }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">{{ form.phone|as_crispy_field }}</div>
+      <div class="col-md-6">{{ form.date_of_birth|as_crispy_field }}</div>
+    </div>
+    {{ form.email|as_crispy_field }}
+    {{ form.need_account_creation|as_crispy_field }}
+    <div class="row" data-password-row>
+      <div class="col-md-6">{{ form.password1|as_crispy_field }}</div>
+      <div class="col-md-6">{{ form.password2|as_crispy_field }}</div>
+    </div>
+    {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+    <div class="d-flex gap-2 mt-2">
+      <button type="submit" class="btn btn-brand">Add member</button>
+      <a href="{% url 'families:member_list' %}" class="btn btn-soft">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

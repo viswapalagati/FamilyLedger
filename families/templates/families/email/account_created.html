@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<body style="font-family:Segoe UI,Arial,sans-serif;color:#1f2733;background:#f4f6fb;padding:24px;">
+  <div style="max-width:520px;margin:auto;background:#fff;border-radius:16px;padding:28px;border:1px solid #e5e9f2;">
+    <h2 style="margin-top:0;color:#3730a3;">Welcome to FamilyLedger</h2>
+    <p>Hi {{ member.full_name }},</p>
+    <p><strong>{{ added_by.full_name }}</strong> has added you to the
+      <strong>{{ family.name }}</strong> family and created a login for you.</p>
+    <p style="margin:22px 0;">
+      <a href="{{ login_url }}" style="background:#4338ca;color:#fff;padding:11px 20px;border-radius:10px;text-decoration:none;font-weight:600;">Sign in to FamilyLedger</a>
+    </p>
+    <p>Your username is your email address: <strong>{{ member.email }}</strong></p>
+    <p style="color:#66738a;font-size:14px;">For security, your password is not in
+      this email. {{ added_by.full_name }} will share it with you separately, or you
+      can <a href="{{ reset_url }}">set your own password</a>.</p>
+    <hr style="border:none;border-top:1px solid #e5e9f2;margin:22px 0;">
+    <p style="color:#66738a;font-size:13px;">Once you're in you can record income and
+      expenses, register bank accounts and assets, and see the whole family's finances.</p>
+  </div>
+</body>
+</html>

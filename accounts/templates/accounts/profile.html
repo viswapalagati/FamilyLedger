@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}My profile · FamilyLedger{% endblock %}
+{% block page_title %}My profile{% endblock %}
+
+{% block content %}
+<div class="fl-grid cols-2">
+  <div class="fl-card">
+    <div class="fl-card-title">Account</div>
+    <table class="fl-table">
+      <tr><th>Name</th><td>{{ user.get_full_name }}</td></tr>
+      <tr><th>Email</th><td>{{ user.email }}</td></tr>
+      <tr><th>Phone</th><td>{{ user.phone|default:"—" }}</td></tr>
+      <tr><th>Joined</th><td>{{ user.date_joined|date:"d M Y" }}</td></tr>
+    </table>
+    <div class="d-flex gap-2 mt-3">
+      <a href="{% url 'accounts:profile_edit' %}" class="btn btn-brand btn-sm">Edit profile</a>
+      <a href="{% url 'accounts:password_change' %}" class="btn btn-soft btn-sm">Change password</a>
+    </div>
+  </div>
+
+  <div class="fl-card">
+    <div class="fl-card-title">Family membership</div>
+    {% if member %}
+      <table class="fl-table">
+        <tr><th>Family</th><td>{{ member.family.name }}</td></tr>
+        <tr><th>Relationship</th><td>{{ member.get_relationship_display }}</td></tr>
+        <tr><th>Role</th><td>{% if member.is_family_admin %}Family admin{% else %}Member{% endif %}</td></tr>
+        <tr><th>Status</th><td>{{ member.get_status_display }}</td></tr>
+        <tr><th>Added by</th><td>{{ member.added_by.full_name|default:"—" }}</td></tr>
+      </table>
+    {% else %}
+      <p class="text-muted">Your login is not linked to a family member.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

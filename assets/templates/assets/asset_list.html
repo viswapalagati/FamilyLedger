@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load ledger_extras %}
+{% block title %}{{ list_title }} · FamilyLedger{% endblock %}
+{% block page_title %}{{ list_title }}{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <form method="get" class="d-flex align-items-center gap-2">
+    <label class="form-label mb-0">Owner</label>
+    <select name="owner" class="form-select form-select-sm" data-autosubmit style="min-width:200px;">
+      <option value="">Whole family</option>
+      {% for m in members %}<option value="{{ m.pk }}" {% if selected_owner == m.pk|stringformat:'s' %}selected{% endif %}>{{ m.full_name }}</option>{% endfor %}
+    </select>
+  </form>
+  <a href="{% url add_url_name %}" class="btn btn-brand btn-sm">+ Add</a>
+</div>
+
+<div class="fl-stat asset mb-3" style="max-width:320px;">
+  <div class="label">Value in list</div>
+  <div class="value">{{ net_total|rupees }}</div>
+</div>
+
+<div class="fl-table-wrap">
+  <table class="fl-table">
+    <thead>
+      <tr>
+        <th>Name</th><th>Owner</th>
+        {% if kind_key == 'bank' %}<th>Bank</th><th>Type</th><th>Account</th><th class="text-end">Balance</th>
+        {% elif kind_key == 'physical' %}<th>Type</th><th>Location</th><th class="text-end">Current value</th>
+        {% elif kind_key == 'digital' %}<th>Type</th><th>Platform</th><th class="text-end">Current value</th>
+        {% else %}<th>Type</th><th>Direction</th><th>Counterparty</th><th class="text-end">Amount</th>{% endif %}
+        <th>Registered by</th><th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in items %}
+        <tr class="{% if not i.is_active %}text-muted{% endif %}">
+          <td>{{ i.name }}</td>
+          <td>{{ i.owner.full_name }}</td>
+          {% if kind_key == 'bank' %}
+            <td>{{ i.bank_name }}</td><td class="small">{{ i.get_account_type_display }}</td>
+            <td class="small">{{ i.masked_number }}</td>
+            <td class="text-end">{{ i.current_balance|rupees }}</td>
+          {% elif kind_key == 'physical' %}
+            <td class="small">{{ i.get_asset_type_display }}</td><td class="small">{{ i.location|default:"—" }}</td>
+            <td class="text-end">{{ i.current_value|rupees }}</td>
+          {% elif kind_key == 'digital' %}
+            <td class="small">{{ i.get_asset_type_display }}</td><td class="small">{{ i.provider_or_platform|default:"—" }}</td>
+            <td class="text-end">{{ i.current_value|rupees }}</td>
+          {% else %}
+            <td class="small">{{ i.get_info_type_display }}</td><td class="small">{{ i.get_direction_display }}</td>
+            <td class="small">{{ i.counterparty|default:"—" }}</td>
+            <td class="text-end">{{ i.amount|rupees }}</td>
+          {% endif %}
+          <td class="small-muted">{{ i.registered_by.full_name }}</td>
+          <td class="text-end">
+            <a href="{% url edit_url_name i.pk %}" class="btn btn-soft btn-sm">Edit</a>
+            <a href="{% url delete_url_name i.pk %}" class="btn btn-soft btn-sm">Delete</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="9" class="fl-empty">Nothing here yet. <a href="{% url add_url_name %}">Add the first one.</a></td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,6 @@
+Django>=5.2,<5.3
+PyMySQL>=1.1
+django-environ>=0.11
+Pillow>=10.3
+django-crispy-forms>=2.3
+crispy-bootstrap5>=2024.10

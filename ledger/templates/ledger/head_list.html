@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Account heads · FamilyLedger{% endblock %}
+{% block page_title %}Account heads{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <p class="text-muted mb-0">Shared categories for the whole family.</p>
+  <a href="{% url 'ledger:head_add' %}" class="btn btn-brand btn-sm">+ New head</a>
+</div>
+
+<div class="fl-grid cols-2">
+  <div class="fl-card">
+    <div class="fl-card-title"><span class="fl-badge badge-income">Income</span></div>
+    {% include "ledger/_head_table.html" with heads=income_heads %}
+  </div>
+  <div class="fl-card">
+    <div class="fl-card-title"><span class="fl-badge badge-expense">Expense</span></div>
+    {% include "ledger/_head_table.html" with heads=expense_heads %}
+  </div>
+</div>
+{% endblock %}

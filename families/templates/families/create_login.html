@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Create login · FamilyLedger{% endblock %}
+{% block page_title %}Create a login for {{ member.full_name }}{% endblock %}
+
+{% block content %}
+<div class="fl-card" style="max-width:600px;">
+  <div class="fl-card-title">New login</div>
+  <p class="text-muted">This turns {{ member.full_name }}'s tracked profile into a
+    real account they can sign in with. They'll get a notification email (without
+    the password).</p>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.email|as_crispy_field }}
+    <div class="row">
+      <div class="col-md-6">{{ form.password1|as_crispy_field }}</div>
+      <div class="col-md-6">{{ form.password2|as_crispy_field }}</div>
+    </div>
+    {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+    <div class="d-flex gap-2 mt-2">
+      <button type="submit" class="btn btn-brand">Create login</button>
+      <a href="{% url 'families:member_detail' member.pk %}" class="btn btn-soft">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

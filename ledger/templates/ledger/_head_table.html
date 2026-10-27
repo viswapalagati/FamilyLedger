@@ -1,0 +1,23 @@
+<div class="fl-table-wrap" style="border:none;">
+  <table class="fl-table">
+    <thead><tr><th>Name</th><th>Parent</th><th>Txns</th><th></th></tr></thead>
+    <tbody>
+      {% for h in heads %}
+        <tr class="{% if h.is_archived %}text-muted{% endif %}">
+          <td>{{ h.name }}{% if h.is_archived %} <span class="fl-badge badge-asset">archived</span>{% endif %}</td>
+          <td class="small">{{ h.parent.name|default:"—" }}</td>
+          <td>{{ h.transactions.count }}</td>
+          <td class="text-end">
+            <a href="{% url 'ledger:head_edit' h.pk %}" class="btn btn-soft btn-sm">Edit</a>
+            <form method="post" action="{% url 'ledger:head_archive' h.pk %}" class="d-inline">
+              {% csrf_token %}
+              <button class="btn btn-soft btn-sm" type="submit">{% if h.is_archived %}Restore{% else %}Archive/Delete{% endif %}</button>
+            </form>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="4" class="fl-empty">None yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

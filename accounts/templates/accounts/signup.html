@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Create your family · FamilyLedger{% endblock %}
+
+{% block auth_content %}
+<div class="fl-auth">
+  <div class="fl-auth-card wide">
+    <div class="fl-brand" style="color:var(--fl-heading);padding-left:0;">
+      <span class="dot"></span> FamilyLedger
+    </div>
+    <h1 class="h4 mt-2">Start your family ledger</h1>
+    <p class="text-muted">You'll be the first member and the family admin. You can
+      add everyone else afterwards.</p>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-6">{{ form.first_name|as_crispy_field }}</div>
+        <div class="col-md-6">{{ form.last_name|as_crispy_field }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">{{ form.email|as_crispy_field }}</div>
+        <div class="col-md-6">{{ form.phone|as_crispy_field }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">{{ form.password1|as_crispy_field }}</div>
+        <div class="col-md-6">{{ form.password2|as_crispy_field }}</div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-6">{{ form.family_name|as_crispy_field }}</div>
+        <div class="col-md-6">{{ form.financial_year_start_month|as_crispy_field }}</div>
+      </div>
+      {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+      <button type="submit" class="btn btn-brand w-100 mt-2">Create family account</button>
+    </form>
+    <p class="text-center mt-3 small">Already have an account?
+      <a href="{% url 'accounts:login' %}">Sign in</a></p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load ledger_extras %}
+{% block title %}{{ member.full_name }} · FamilyLedger{% endblock %}
+{% block page_title %}{{ member.full_name }}{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap gap-2 mb-3">
+  {% if can_edit %}<a href="{% url 'families:member_edit' member.pk %}" class="btn btn-soft btn-sm">Edit details</a>{% endif %}
+  {% if not member.has_login and can_edit %}
+    <a href="{% url 'families:member_create_login' member.pk %}" class="btn btn-brand btn-sm">Create login</a>
+  {% endif %}
+  {% if can_manage and member.pk != current_member.pk %}
+    <a href="{% url 'families:member_manage' member.pk %}" class="btn btn-soft btn-sm">Manage role / status</a>
+    {% if member.status == 'active' %}
+      <a href="{% url 'families:member_deactivate' member.pk %}" class="btn btn-soft btn-sm">Deactivate</a>
+    {% endif %}
+  {% endif %}
+  <a href="{% url 'ledger:entry_add' %}?member={{ member.pk }}" class="btn btn-brand btn-sm">+ Add entry for {{ member.full_name|slice:':12' }}</a>
+</div>
+
+<div class="fl-grid cols-3 mb-3">
+  <div class="fl-stat income"><div class="label">Lifetime income</div><div class="value">{{ income_total|rupees }}</div></div>
+  <div class="fl-stat expense"><div class="label">Lifetime expense</div><div class="value">{{ expense_total|rupees }}</div></div>
+  <div class="fl-stat"><div class="label">Relationship</div><div class="value" style="font-size:1.2rem;">{{ member.get_relationship_display }}</div>
+    <div class="sub">{{ member.get_status_display }} · {% if member.has_login %}has login{% else %}no login{% endif %}</div></div>
+</div>
+
+<div class="fl-grid cols-2">
+  <div class="fl-card">
+    <div class="fl-card-title">Details</div>
+    <table class="fl-table">
+      <tr><th>Email</th><td>{{ member.email|default:"—" }}</td></tr>
+      <tr><th>Phone</th><td>{{ member.phone|default:"—" }}</td></tr>
+      <tr><th>Date of birth</th><td>{{ member.date_of_birth|date:"d M Y"|default:"—" }}</td></tr>
+      <tr><th>Added by</th><td>{{ member.added_by.full_name|default:"—" }}</td></tr>
+      <tr><th>Joined ledger</th><td>{{ member.created_at|date:"d M Y" }}</td></tr>
+    </table>
+  </div>
+
+  <div class="fl-card">
+    <div class="fl-card-title">Recent transactions</div>
+    <div class="fl-table-wrap" style="border:none;">
+      <table class="fl-table">
+        <thead><tr><th>Date</th><th>Head</th><th>Recorded by</th><th class="text-end">Amount</th></tr></thead>
+        <tbody>
+          {% for t in recent %}
+            <tr>
+              <td>{{ t.occurred_date|date:"d M Y" }}</td>
+              <td>{{ t.account_head.name }}</td>
+              <td class="small">{{ t.recorded_by.full_name }}</td>
+              <td class="text-end {{ t.signed_amount|signed_class }}">{{ t.signed_amount|rupees }}</td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="4" class="fl-empty">Nothing recorded yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

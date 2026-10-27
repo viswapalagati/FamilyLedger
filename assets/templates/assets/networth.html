@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load ledger_extras %}
+{% block title %}Net worth · FamilyLedger{% endblock %}
+{% block page_title %}Net worth{% endblock %}
+
+{% block content %}
+<div class="fl-grid cols-4 mb-3">
+  <div class="fl-stat asset"><div class="label">Family net worth</div><div class="value">{{ family_nw.total|rupees }}</div></div>
+  <div class="fl-stat"><div class="label">Bank balances</div><div class="value">{{ family_nw.bank|rupees }}</div></div>
+  <div class="fl-stat"><div class="label">Physical + digital</div>
+    <div class="value">{{ family_nw.physical|add:family_nw.digital|rupees }}</div></div>
+  <div class="fl-stat expense"><div class="label">Liabilities</div><div class="value">{{ family_nw.liability|rupees }}</div></div>
+</div>
+
+<div class="fl-card">
+  <div class="fl-card-title">By member</div>
+  <div class="fl-table-wrap" style="border:none;">
+    <table class="fl-table">
+      <thead><tr><th>Member</th><th class="text-end">Bank</th><th class="text-end">Physical</th><th class="text-end">Digital</th><th class="text-end">Receivable</th><th class="text-end">Liability</th><th class="text-end">Net worth</th></tr></thead>
+      <tbody>
+        {% for row in member_rows %}
+          <tr>
+            <td>{{ row.member.full_name }}</td>
+            <td class="text-end">{{ row.nw.bank|rupees }}</td>
+            <td class="text-end">{{ row.nw.physical|rupees }}</td>
+            <td class="text-end">{{ row.nw.digital|rupees }}</td>
+            <td class="text-end">{{ row.nw.receivable|rupees }}</td>
+            <td class="text-end amount-neg">{{ row.nw.liability|rupees }}</td>
+            <td class="text-end" style="font-weight:700;">{{ row.nw.total|rupees }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <p class="small-muted mt-2">Net worth = bank balances + physical + digital + receivables − liabilities,
+    over active records. Valuations are whatever members last entered.</p>
+</div>
+{% endblock %}

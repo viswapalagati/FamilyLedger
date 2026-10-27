@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load ledger_extras humanize %}
+{% block title %}Dashboard · FamilyLedger{% endblock %}
+{% block page_title %}Dashboard — {{ scope_title }}{% endblock %}
+
+{% block content %}
+{% include "core/_scope_period.html" %}
+
+<div class="fl-grid cols-4 mb-3">
+  <div class="fl-stat income">
+    <div class="label">Income</div>
+    <div class="value">{{ totals.income|rupees }}</div>
+    <div class="sub">{{ filter_ctx.period_label }}</div>
+  </div>
+  <div class="fl-stat expense">
+    <div class="label">Expense</div>
+    <div class="value">{{ totals.expense|rupees }}</div>
+    <div class="sub">{{ filter_ctx.period_label }}</div>
+  </div>
+  <div class="fl-stat {% if totals.net >= 0 %}income{% else %}expense{% endif %}">
+    <div class="label">Net savings</div>
+    <div class="value">{{ totals.net|rupees }}</div>
+    <div class="sub">Savings rate {{ totals.savings_rate|pct }}</div>
+  </div>
+  <div class="fl-stat asset">
+    <div class="label">Net worth {% if member_breakdown is None %}(you){% else %}(family){% endif %}</div>
+    <div class="value">{{ net_worth.total|rupees }}</div>
+    <div class="sub">{{ recurring_count }} recurring · {{ anomaly_count }} flags</div>
+  </div>
+</div>
+
+<div class="fl-grid cols-3 mb-3">
+  <div class="fl-card">
+    <div class="fl-card-title">Income vs expense</div>
+    <div style="height:230px;"><canvas data-chart='{{ chart_income_expense_json|safe }}'></canvas></div>
+  </div>
+  <div class="fl-card">
+    <div class="fl-card-title">Where the money goes</div>
+    {% if expense_rows %}
+      <div style="height:230px;"><canvas data-chart='{{ chart_expense_head_json|safe }}'></canvas></div>
+    {% else %}<div class="fl-empty">No expenses in this period.</div>{% endif %}
+  </div>
+  <div class="fl-card">
+    <div class="fl-card-title">Trend</div>
+    <div style="height:230px;"><canvas data-chart='{{ chart_series_json|safe }}'></canvas></div>
+  </div>
+</div>
+
+<div class="fl-grid cols-2 mb-3">
+  <div class="fl-card">
+    <div class="fl-card-title">Top expense categories</div>
+    <table class="fl-table">
+      <tbody>
+        {% for r in expense_rows %}
+          <tr><td>{{ r.label }}</td><td class="text-end amount-neg">{{ r.total|rupees }}</td></tr>
+        {% empty %}<tr><td class="fl-empty">Nothing yet.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="fl-card">
+    <div class="fl-card-title">Top merchants</div>
+    <table class="fl-table">
+      <tbody>
+        {% for r in top_expense_merchants %}
+          <tr><td>{{ r.label }}</td><td class="text-end amount-neg">{{ r.total|rupees }}</td></tr>
+        {% empty %}<tr><td class="fl-empty">Nothing yet.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% if member_breakdown %}
+<div class="fl-card mb-3">
+  <div class="fl-card-title">By family member</div>
+  <div class="fl-table-wrap" style="border:none;">
+    <table class="fl-table">
+      <thead><tr><th>Member</th><th class="text-end">Income</th><th class="text-end">Expense</th><th class="text-end">Net</th><th></th></tr></thead>
+      <tbody>
+        {% for row in member_breakdown %}
+          <tr>
+            <td>{{ row.member.full_name }}</td>
+            <td class="text-end amount-pos">{{ row.income|rupees }}</td>
+            <td class="text-end amount-neg">{{ row.expense|rupees }}</td>
+            <td class="text-end {{ row.net|signed_class }}">{{ row.net|rupees }}</td>
+            <td class="text-end"><a class="btn btn-soft btn-sm" href="{% url 'dashboard:member' row.member.pk %}">Report</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+<div class="fl-card">
+  <div class="fl-card-title">Recent activity</div>
+  <div class="fl-table-wrap" style="border:none;">
+    <table class="fl-table">
+      <thead><tr><th>Date</th><th>Member</th><th>Head</th><th>Merchant</th><th>Recorded by</th><th class="text-end">Amount</th></tr></thead>
+      <tbody>
+        {% for t in recent %}
+          <tr>
+            <td>{{ t.occurred_date|date:"d M Y" }}</td>
+            <td>{{ t.member.full_name }}</td>
+            <td>{{ t.account_head.name }}</td>
+            <td>{{ t.merchant_or_source|default:"—" }}</td>
+            <td class="small-muted">{{ t.recorded_by.full_name }}</td>
+            <td class="text-end {{ t.signed_amount|signed_class }}">{{ t.signed_amount|rupees }}</td>
+          </tr>
+        {% empty %}<tr><td colspan="6" class="fl-empty">No transactions yet. <a href="{% url 'ledger:entry_add' %}">Add one.</a></td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

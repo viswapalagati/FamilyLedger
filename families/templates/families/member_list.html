@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Family members · FamilyLedger{% endblock %}
+{% block page_title %}Family members{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <p class="text-muted mb-0">{{ current_family.name }} — everyone the ledger tracks.</p>
+  <a href="{% url 'families:member_add' %}" class="btn btn-brand btn-sm">+ Add member</a>
+</div>
+
+<div class="fl-table-wrap">
+  <table class="fl-table">
+    <thead>
+      <tr><th>Name</th><th>Relationship</th><th>Contact</th><th>Login</th><th>Role</th><th>Status</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for m in members %}
+        <tr>
+          <td>
+            <div class="d-flex align-items-center gap-2">
+              <span class="fl-avatar">{{ m.initials }}</span>
+              <div>
+                <div style="font-weight:600;">{{ m.full_name }}</div>
+                {% if m.age %}<div class="small-muted">{{ m.age }} yrs</div>{% endif %}
+              </div>
+            </div>
+          </td>
+          <td>{{ m.get_relationship_display }}</td>
+          <td class="small">{{ m.email|default:"—" }}<br>{{ m.phone|default:"" }}</td>
+          <td>{% if m.has_login %}<span class="fl-badge badge-income">Yes</span>{% else %}<span class="fl-badge badge-asset">No</span>{% endif %}</td>
+          <td>{% if m.is_family_admin %}<span class="fl-badge badge-review">Admin</span>{% else %}Member{% endif %}</td>
+          <td>{% if m.status == 'active' %}<span class="fl-badge badge-income">Active</span>{% else %}<span class="fl-badge badge-expense">Inactive</span>{% endif %}</td>
+          <td class="text-end"><a href="{% url 'families:member_detail' m.pk %}" class="btn btn-soft btn-sm">Open</a></td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="7" class="fl-empty">No members yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

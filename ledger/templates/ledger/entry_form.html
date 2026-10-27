@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}{{ form_title }} · FamilyLedger{% endblock %}
+{% block page_title %}{{ form_title }}{% endblock %}
+
+{% block content %}
+<div class="fl-card" style="max-width:760px;">
+  <div class="fl-card-title">Entry details</div>
+  <p class="text-muted">Pick <strong>who</strong> the income/expense belongs to
+    (that can be another family member). You are always recorded as the person who
+    entered it.</p>
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-6">{{ form.member|as_crispy_field }}</div>
+      <div class="col-md-6">{{ form.txn_type|as_crispy_field }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-8">{{ form.account_head|as_crispy_field }}</div>
+      <div class="col-md-4">{{ form.amount|as_crispy_field }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">{{ form.occurred_at|as_crispy_field }}</div>
+      <div class="col-md-6">{{ form.payment_method|as_crispy_field }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">{{ form.merchant_or_source|as_crispy_field }}</div>
+      <div class="col-md-6">{{ form.bank_account|as_crispy_field }}</div>
+    </div>
+    {{ form.description|as_crispy_field }}
+    {{ form.attachment|as_crispy_field }}
+    {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+    <div class="d-flex gap-2 mt-2">
+      <button type="submit" class="btn btn-brand">Save entry</button>
+      <a href="{{ cancel_url|default:'/dashboard/' }}" class="btn btn-soft">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

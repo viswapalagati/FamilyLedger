@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load ledger_extras humanize %}
+{% block title %}{{ member.full_name }} report · FamilyLedger{% endblock %}
+{% block page_title %}Report — {{ member.full_name }}{% endblock %}
+
+{% block content %}
+{% include "core/_scope_period.html" %}
+
+<div class="fl-grid cols-4 mb-3">
+  <div class="fl-stat income"><div class="label">Income earned</div><div class="value">{{ totals.income|rupees }}</div></div>
+  <div class="fl-stat expense"><div class="label">Expense spent</div><div class="value">{{ totals.expense|rupees }}</div></div>
+  <div class="fl-stat {% if totals.net >= 0 %}income{% else %}expense{% endif %}"><div class="label">Net</div><div class="value">{{ totals.net|rupees }}</div><div class="sub">Savings rate {{ totals.savings_rate|pct }}</div></div>
+  <div class="fl-stat asset"><div class="label">Net worth</div><div class="value">{{ net_worth.total|rupees }}</div></div>
+</div>
+
+<div class="fl-grid cols-2 mb-3">
+  <div class="fl-card"><div class="fl-card-title">Trend</div>
+    <div style="height:240px;"><canvas data-chart='{{ chart_series_json|safe }}'></canvas></div></div>
+  <div class="fl-card"><div class="fl-card-title">Where {{ member.full_name|slice:':16' }}'s money goes</div>
+    {% if expense_rows %}<div style="height:240px;"><canvas data-chart='{{ chart_expense_head_json|safe }}'></canvas></div>
+    {% else %}<div class="fl-empty">No expenses in this period.</div>{% endif %}</div>
+</div>
+
+<div class="fl-grid cols-2 mb-3">
+  <div class="fl-card"><div class="fl-card-title">Expense categories</div>
+    <table class="fl-table"><tbody>
+      {% for r in expense_rows %}<tr><td>{{ r.label }}</td><td class="text-end amount-neg">{{ r.total|rupees }}</td></tr>{% empty %}<tr><td class="fl-empty">Nothing.</td></tr>{% endfor %}
+    </tbody></table></div>
+  <div class="fl-card"><div class="fl-card-title">Top merchants</div>
+    <table class="fl-table"><tbody>
+      {% for r in top_expense_merchants %}<tr><td>{{ r.label }}</td><td class="text-end amount-neg">{{ r.total|rupees }}</td></tr>{% empty %}<tr><td class="fl-empty">Nothing.</td></tr>{% endfor %}
+    </tbody></table></div>
+</div>
+
+<div class="fl-card">
+  <div class="fl-card-title">Recent transactions</div>
+  <div class="fl-table-wrap" style="border:none;">
+    <table class="fl-table">
+      <thead><tr><th>Date</th><th>Head</th><th>Merchant</th><th>Recorded by</th><th class="text-end">Amount</th></tr></thead>
+      <tbody>
+        {% for t in recent %}
+          <tr>
+            <td>{{ t.occurred_date|date:"d M Y" }}</td>
+            <td>{{ t.account_head.name }}</td>
+            <td>{{ t.merchant_or_source|default:"—" }}</td>
+            <td class="small-muted">{{ t.recorded_by.full_name }}</td>
+            <td class="text-end {{ t.signed_amount|signed_class }}">{{ t.signed_amount|rupees }}</td>
+          </tr>
+        {% empty %}<tr><td colspan="5" class="fl-empty">Nothing recorded for this member yet.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
