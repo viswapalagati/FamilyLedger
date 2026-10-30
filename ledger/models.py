@@ -19,7 +19,8 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from decimal import Decimal
-from django.core.validators import MinValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
+import calendar
 from datetime import timedelta
 
 
@@ -91,6 +92,148 @@ class AccountHead(TimeStampedModel):
 
     def editable_by(self, member):
         return True  # any active member may manage account heads
+
+
+class Budget(TimeStampedModel):
+    family = models.ForeignKey(
+        Family, on_delete=models.CASCADE, related_name="budgets"
+    )
+    account_head = models.ForeignKey(
+        AccountHead, on_delete=models.PROTECT, related_name="budgets"
+    )
+    year = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(2000), MaxValueValidator(9999)]
+    )
+    month = models.PositiveSmallIntegerField(
+        choices=[(month, calendar.month_name[month]) for month in range(1, 13)]
+    )
+    amount = models.DecimalField(
+        validators=[MinValueValidator(Decimal("0.01"))], **MONEY
+    )
+    created_by = models.ForeignKey(
+        FamilyMember,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="created_budgets",
+    )
+
+    class Meta:
+        ordering = ["account_head__name"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["family", "account_head", "year", "month"],
+                name="uniq_budget_family_head_period",
+            ),
+        ]
+
+    def clean(self):
+        super().clean()
+        if self.account_head_id:
+            if self.account_head.family_id != self.family_id:
+                raise ValidationError(
+                    {"account_head": "Category must belong to this family."}
+                )
+            if self.account_head.kind != TxnType.EXPENSE:
+                raise ValidationError(
+                    {"account_head": "Budgets can only use expense categories."}
+                )
+
+    def __str__(self):
+        return f"{self.account_head.name} budget · {self.year}-{self.month:02d}"
+
+
+class SavingsGoal(TimeStampedModel):
+    family = models.ForeignKey(
+        Family, on_delete=models.CASCADE, related_name="savings_goals"
+    )
+    name = models.CharField(max_length=120)
+    description = models.TextField(blank=True)
+    target_amount = models.DecimalField(
+        validators=[MinValueValidator(Decimal("0.01"))], **MONEY
+    )
+    target_date = models.DateField(null=True, blank=True)
+    created_by = models.ForeignKey(
+        FamilyMember,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="created_savings_goals",
+    )
+
+    class Meta:
+        ordering = ["target_date", "name"]
+
+    def __str__(self):
+        return self.name
+
+
+class GoalContribution(TimeStampedModel):
+    goal = models.ForeignKey(
+        SavingsGoal, on_delete=models.CASCADE, related_name="contributions"
+    )
+    family = models.ForeignKey(
+        Family, on_delete=models.CASCADE, related_name="goal_contributions"
+    )
+    member = models.ForeignKey(
+        FamilyMember, on_delete=models.PROTECT, related_name="goal_contributions"
+    )
+    amount = models.DecimalField(
+        validators=[MinValueValidator(Decimal("0.01"))], **MONEY
+    )
+    contributed_on = models.DateField(default=timezone.localdate)
+    note = models.CharField(max_length=240, blank=True)
+
+    class Meta:
+        ordering = ["-contributed_on", "-created_at"]
+
+    def clean(self):
+        super().clean()
+        if self.goal_id and self.goal.family_id != self.family_id:
+            raise ValidationError({"goal": "Goal must belong to this family."})
+        if self.member_id and self.member.family_id != self.family_id:
+            raise ValidationError({"member": "Member must belong to this family."})
+
+    def __str__(self):
+        return f"{self.amount} contribution to {self.goal}"
+
+
+class AuditEvent(models.Model):
+    class Action(models.TextChoices):
+        CREATED = "created", "Created"
+        UPDATED = "updated", "Updated"
+        DELETED = "deleted", "Deleted"
+
+    class EntityType(models.TextChoices):
+        TRANSACTION = "transaction", "Transaction"
+        BUDGET = "budget", "Budget"
+        SAVINGS_GOAL = "savings_goal", "Savings goal"
+        GOAL_CONTRIBUTION = "goal_contribution", "Savings contribution"
+
+    family = models.ForeignKey(
+        Family, on_delete=models.CASCADE, related_name="audit_events"
+    )
+    actor = models.ForeignKey(
+        FamilyMember,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="audit_events",
+    )
+    actor_name = models.CharField(max_length=120)
+    actor_email = models.EmailField(blank=True)
+    action = models.CharField(max_length=10, choices=Action.choices)
+    entity_type = models.CharField(max_length=24, choices=EntityType.choices)
+    entity_id = models.CharField(max_length=64)
+    summary = models.CharField(max_length=240)
+    changes = models.JSONField(default=dict)
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    class Meta:
+        ordering = ["-created_at", "-pk"]
+
+    def __str__(self):
+        return f"{self.get_action_display()} {self.get_entity_type_display()} #{self.entity_id}"
 
 
 

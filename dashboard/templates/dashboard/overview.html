@@ -6,6 +6,27 @@
 {% block content %}
 {% include "core/_scope_period.html" %}
 
+{% if budget_alerts %}
+  <div class="mb-3">
+    {% for item in budget_alerts %}
+      {% if item.alert == "exceeded" %}
+        <div class="alert alert-danger" role="alert">
+          <strong>Budget reached:</strong> {{ item.budget.account_head.name }} has spent
+          {{ item.spent|rupees }} of {{ item.budget.amount|rupees }}
+          ({{ item.percent|floatformat:0 }}%).
+        </div>
+      {% else %}
+        <div class="alert alert-warning" role="alert">
+          <strong>Budget alert:</strong> {{ item.budget.account_head.name }} has spent
+          {{ item.spent|rupees }} of {{ item.budget.amount|rupees }}
+          ({{ item.percent|floatformat:0 }}%).
+        </div>
+      {% endif %}
+    {% endfor %}
+    <a class="btn btn-soft btn-sm" href="{% url 'ledger:budget_list' %}">View budgets</a>
+  </div>
+{% endif %}
+
 <div class="fl-grid cols-4 mb-3">
   <div class="fl-stat income">
     <div class="label">Income</div>

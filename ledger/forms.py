@@ -7,10 +7,16 @@ re-validate FKs server-side (BR-15). TransactionForm/RecurringTemplateForm set
 but may be any active family member (on-behalf, §3 / BR-4). Head kind must equal
 the entry type (BR-6).
 """
-
 from core.forms import FamilyModelForm
 from families.models import FamilyMember
-from .models import AccountHead, RecurringTemplate, Transaction  # noqa: F401
+from .models import (
+    AccountHead,
+    Budget,
+    GoalContribution,
+    RecurringTemplate,
+    SavingsGoal,
+    Transaction,
+)  # noqa: F401
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils import timezone
@@ -48,6 +54,62 @@ class AccountHeadForm(FamilyModelForm):
         if commit:
             obj.save()
         return obj
+
+
+class BudgetForm(FamilyModelForm):
+    year = forms.IntegerField(min_value=2000, max_value=9999)
+
+    class Meta:
+        model = Budget
+        fields = ["account_head", "amount", "year", "month"]
+        widgets = {
+            "year": forms.NumberInput(attrs={"min": 2000, "max": 9999}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.instance.family = self.family
+        self.fields["account_head"].queryset = AccountHead.objects.filter(
+            family=self.family,
+            kind="expense",
+            is_archived=False,
+        )
+    def save(self, commit=True):
+        budget = super().save(commit=False)
+        budget.family = self.family
+        if not budget.pk:
+            budget.created_by = self.acting_member
+        if commit:
+            budget.save()
+        return budget
+
+
+class SavingsGoalForm(FamilyModelForm):
+    class Meta:
+        model = SavingsGoal
+        fields = ["name", "description", "target_amount", "target_date"]
+        widgets = {
+            "description": forms.Textarea(attrs={"rows": 3}),
+            "target_date": forms.DateInput(attrs={"type": "date"}),
+        }
+
+    def save(self, commit=True):
+        goal = super().save(commit=False)
+        goal.family = self.family
+        if not goal.pk:
+            goal.created_by = self.acting_member
+        if commit:
+            goal.save()
+        return goal
+
+
+class GoalContributionForm(forms.ModelForm):
+    class Meta:
+        model = GoalContribution
+        fields = ["amount", "contributed_on", "note"]
+        widgets = {
+            "contributed_on": forms.DateInput(attrs={"type": "date"}),
+        }
 
 
 class TransactionForm(FamilyModelForm):
@@ -108,3 +170,5 @@ class RecurringTemplateForm(FamilyModelForm):
         if commit:
             obj.save()
         return obj
+
+    

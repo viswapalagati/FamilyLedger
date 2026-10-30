@@ -21,5 +21,28 @@ urlpatterns = [
     path("recurring/add/", views.RecurringCreateView.as_view(), name="recurring_add"),
     path("recurring/<int:pk>/edit/", views.RecurringUpdateView.as_view(), name="recurring_edit"),
     path("recurring/<int:pk>/delete/", views.RecurringDeleteView.as_view(), name="recurring_delete"),
+
+    path("budgets/", views.BudgetListView.as_view(), name="budget_list"),
+    path("budgets/add/", views.BudgetCreateView.as_view(), name="budget_add"),
+    path("budgets/<int:pk>/edit/", views.BudgetUpdateView.as_view(), name="budget_edit"),
+    path("budgets/<int:pk>/delete/", views.BudgetDeleteView.as_view(), name="budget_delete"),
+    path("goals/", views.SavingsGoalListView.as_view(), name="savings_goal_list"),
+    path("goals/add/", views.SavingsGoalCreateView.as_view(), name="savings_goal_add"),
+    path(
+        "goals/<int:pk>/edit/",
+        views.SavingsGoalUpdateView.as_view(),
+        name="savings_goal_edit",
+    ),
+    path(
+        "goals/<int:pk>/delete/",
+        views.SavingsGoalDeleteView.as_view(),
+        name="savings_goal_delete",
+    ),
+    path(
+        "goals/<int:goal_pk>/contribute/",
+        views.GoalContributionCreateView.as_view(),
+        name="goal_contribute",
+    ),
+    path("audit/", views.AuditHistoryView.as_view(), name="audit_history"),
 ]
 

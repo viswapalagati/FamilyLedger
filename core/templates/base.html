@@ -27,6 +27,9 @@
         <li><a href="{% url 'ledger:expense_list' %}" class="{% if request.resolver_match.url_name == 'expense_list' %}active{% endif %}">🧾 Expenses</a></li>
         <li><a href="{% url 'ledger:head_list' %}" class="{% if request.resolver_match.url_name == 'head_list' %}active{% endif %}">🏷️ Account heads</a></li>
         <li><a href="{% url 'ledger:recurring_list' %}" class="{% if request.resolver_match.url_name == 'recurring_list' %}active{% endif %}">🔁 Recurring</a></li>
+        <li><a href="{% url 'ledger:budget_list' %}" class="{% if request.resolver_match.url_name == 'budget_list' %}active{% endif %}">🎯 Budgets</a></li>
+        <li><a href="{% url 'ledger:savings_goal_list' %}" class="{% if request.resolver_match.url_name == 'savings_goal_list' %}active{% endif %}">💰 Savings goals</a></li>
+        <li><a href="{% url 'ledger:audit_history' %}" class="{% if request.resolver_match.url_name == 'audit_history' %}active{% endif %}">📜 Audit history</a></li>
 
         <li class="group-label">Assets</li>
         <li><a href="{% url 'assets:networth' %}" class="{% if request.resolver_match.url_name == 'networth' %}active{% endif %}">💎 Net worth</a></li>

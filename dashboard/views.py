@@ -23,6 +23,9 @@ import json
 from django.shortcuts import get_object_or_404
 from ledger.models import AccountHead  # noqa: F401
 from django.http import JsonResponse
+from django.utils import timezone
+from ledger.budgets import budget_statuses
+
 
 print("dashboard views.py loaded")
 
@@ -62,65 +65,49 @@ class OverviewView(ScopePeriodMixin, TemplateView):
     #       recent, member_breakdown (family scope only), net_worth, the three
     #       chart_*_json blobs, filter_ctx, scope_title.
 
-    print("OverviewView initialized")
     def get_context_data(self, **kwargs):
-        try:
-            context = super().get_context_data(**kwargs)
-            print("printing context of overviewView", context)
-            txns = self.scope_transactions(Transaction.objects.all())
-            totals = services.period_totals(txns)
-            expense_rows = services.by_head(txns, TxnType.EXPENSE)
-            income_rows = services.by_head(txns, TxnType.INCOME)
-            series = services.series_by_month(txns, self.period)
-            print("2")
+        context = super().get_context_data(**kwargs)
+        txns = self.scope_transactions(Transaction.objects.all())
+        totals = services.period_totals(txns)
+        expense_rows = services.by_head(txns, TxnType.EXPENSE)
+        income_rows = services.by_head(txns, TxnType.INCOME)
+        series = services.series_by_month(txns, self.period)
 
-            context["totals"] = totals
-            context["expense_rows"] = expense_rows[:8]
-            context["income_rows"] = income_rows[:8]
-            print("3")
-            context["top_expense_merchants"] = services.top_merchants(txns, TxnType.EXPENSE)
-            context["top_income_sources"] = services.top_merchants(txns, TxnType.INCOME)
-            context["anomaly_count"] = 0
-            print("4")
-            context["recurring_count"] = self.family.recurring_templates.filter(is_active=True).count()
-            context["recent"] = txns.select_related("member", "account_head", "recorded_by")[:8]
-            print("5")
+        context["totals"] = totals
+        context["expense_rows"] = expense_rows[:8]
+        context["income_rows"] = income_rows[:8]
+        context["top_expense_merchants"] = services.top_merchants(txns, TxnType.EXPENSE)
+        context["top_income_sources"] = services.top_merchants(txns, TxnType.INCOME)
+        context["anomaly_count"] = 0
+        context["recurring_count"] = self.family.recurring_templates.filter(is_active=True).count()
+        context["recent"] = txns.select_related("member", "account_head", "recorded_by")[:8]
 
-            if self.scope_member is None:
-                context["member_breakdown"] = services.member_breakdown(self.family, self.period)
-            else:
-                context["member_breakdown"] = None
-            print("6")
+        if self.scope_member is None:
+            context["member_breakdown"] = services.member_breakdown(self.family, self.period)
+        else:
+            context["member_breakdown"] = None
 
-            nw_member = self.scope_member if self.scope_member else None
-            print("nw_member:", nw_member)
-            context["net_worth"] = services.net_worth(self.family, nw_member)
-            print("7")
+        context["net_worth"] = services.net_worth(self.family, self.scope_member)
+        context["chart_income_expense_json"] = json.dumps(
+            _pie(["Income", "Expense"], [float(totals["income"]), float(totals["expense"])], "semantic")
+        )
+        context["chart_expense_head_json"] = json.dumps(
+            _pie([r["label"] for r in expense_rows], [float(r["total"]) for r in expense_rows])
+        )
+        context["chart_series_json"] = json.dumps(_bar_income_expense(series))
+        context["filter_ctx"] = self.get_filter_ctx()
 
-            context["chart_income_expense_json"] = json.dumps(
-                _pie(["Income", "Expense"], [float(totals["income"]), float(totals["expense"])], "semantic")
-            )
-            context["chart_expense_head_json"] = json.dumps(
-                _pie([r["label"] for r in expense_rows], [float(r["total"]) for r in expense_rows])
-            )
-            print("8")
-            context["chart_series_json"] = json.dumps(_bar_income_expense(series))
-
-            context["filter_ctx"] = self.get_filter_ctx()
-            context["scope_title"] = (
-                "Whole family" if self.scope_member is None
-                else ("You" if self.scope_member.pk == self.acting_member.pk else self.scope_member.full_name)
-            )
-            print("9")
-            print("OverviewView context data prepared", context)
-            return context
-        
-        except Exception as e:
-            print("Error in OverviewView get_context_data:", e)
-            
-
-    
-        
+        today = timezone.localdate()
+        context["budget_alerts"] = [
+            item
+            for item in budget_statuses(self.family, today.year, today.month)
+            if item["alert"]
+        ]
+        context["scope_title"] = (
+            "Whole family" if self.scope_member is None
+            else ("You" if self.scope_member.pk == self.acting_member.pk else self.scope_member.full_name)
+        )
+        return context
 
 
 class FamilyReportView(ScopePeriodMixin, TemplateView):
