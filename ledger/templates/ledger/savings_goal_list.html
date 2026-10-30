@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load ledger_extras %}
+
+{% block title %}Savings goals · FamilyLedger{% endblock %}
+{% block page_title %}Family savings goals{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <p class="text-muted mb-0">Shared family targets and member contributions.</p>
+  {% if is_family_admin %}
+    <a class="btn btn-brand" href="{% url 'ledger:savings_goal_add' %}">Create goal</a>
+  {% endif %}
+</div>
+
+<div class="fl-grid cols-2">
+  {% for item in savings_goal_statuses %}
+    <section class="fl-card">
+      <div class="d-flex justify-content-between align-items-start gap-2">
+        <div>
+          <div class="fl-card-title mb-1">{{ item.goal.name }}</div>
+          {% if item.goal.description %}<p class="text-muted mb-2">{{ item.goal.description|linebreaksbr }}</p>{% endif %}
+          {% if item.goal.target_date %}<div class="small-muted">Target date: {{ item.goal.target_date|date:"j M Y" }}</div>{% endif %}
+        </div>
+        {% if item.is_complete %}<span class="badge text-bg-success">Goal reached</span>{% endif %}
+      </div>
+
+      <div class="d-flex justify-content-between mt-3">
+        <span>Saved <strong>{{ item.saved|rupees }}</strong></span>
+        <span>Target {{ item.goal.target_amount|rupees }}</span>
+      </div>
+      <div class="progress mt-2" role="progressbar" aria-valuenow="{{ item.progress_percent|floatformat:0 }}" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar {% if item.is_complete %}bg-success{% endif %}" style="width:{{ item.progress_percent|floatformat:0 }}%"></div>
+      </div>
+      <div class="d-flex justify-content-between small-muted mt-1">
+        <span>{{ item.percent|floatformat:0 }}% complete</span>
+        <span>{{ item.remaining|rupees }} remaining</span>
+      </div>
+
+      <div class="d-flex gap-2 mt-3">
+        <a class="btn btn-brand btn-sm" href="{% url 'ledger:goal_contribute' item.goal.pk %}">Record contribution</a>
+        {% if is_family_admin %}
+          <a class="btn btn-soft btn-sm" href="{% url 'ledger:savings_goal_edit' item.goal.pk %}">Edit</a>
+          <a class="btn btn-soft btn-sm" href="{% url 'ledger:savings_goal_delete' item.goal.pk %}">Delete</a>
+        {% endif %}
+      </div>
+
+      {% with contributions=item.goal.contributions.all %}
+        {% if contributions %}
+          <hr>
+          <h3 class="h6">Recent contributions</h3>
+          <div class="fl-table-wrap" style="border:none;">
+            <table class="fl-table">
+              <tbody>
+                {% for contribution in contributions|slice:":5" %}
+                  <tr>
+                    <td>{{ contribution.contributed_on|date:"j M Y" }}</td>
+                    <td>{{ contribution.member.full_name }}</td>
+                    <td class="text-end">{{ contribution.amount|rupees }}</td>
+                  </tr>
+                  {% if contribution.note %}
+                    <tr><td colspan="3" class="small-muted">{{ contribution.note }}</td></tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% endif %}
+      {% endwith %}
+    </section>
+  {% empty %}
+    <div class="fl-card">
+      <p class="fl-empty mb-0">No savings goals yet.{% if is_family_admin %} <a href="{% url 'ledger:savings_goal_add' %}">Create the first goal</a>.{% endif %}</p>
+    </div>
+  {% endfor %}
+</div>
+<p class="small-muted mt-3">Contributions update goal progress only and are not added to income or expense totals.</p>
+{% endblock %}
