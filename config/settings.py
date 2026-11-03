@@ -4,6 +4,7 @@ Settings are driven by environment variables loaded from a local ``.env`` file
 via ``django-environ``. See ``.env.example`` for the full list.
 """
 
+import os
 from pathlib import Path
 
 import environ
@@ -25,6 +26,12 @@ environ.Env.read_env(BASE_DIR / ".env")
 SECRET_KEY = env("DJANGO_SECRET_KEY", default="dev-insecure-key-change-me")
 DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
+RENDER_HOST = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_HOST:
+    ALLOWED_HOSTS.append(RENDER_HOST)
+ALLOWED_HOSTS += [h for h in os.environ.get("EXTRA_HOSTS", "").split(",") if h]
+
+CSRF_TRUSTED_ORIGINS = [f"https://{h}" for h in ALLOWED_HOSTS if h not in ("localhost", "127.0.0.1")]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -48,6 +55,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -81,11 +89,21 @@ ASGI_APPLICATION = "config.asgi.application"
 # ---------------------------------------------------------------------------
 # Database — MySQL by default; set DATABASE_URL to override.
 # ---------------------------------------------------------------------------
+# DATABASES = {
+#     "default": env.db(
+#         "DATABASE_URL",
+#         default="mysql://root:Viswa%40135@127.0.0.1:3306/family_ledger",
+#     ),
+# }
+# DATABASES["default"].setdefault("OPTIONS", {})
+# if DATABASES["default"]["ENGINE"] == "django.db.backends.mysql":
+#     DATABASES["default"]["OPTIONS"].update(
+#         {"charset": "utf8mb4", "init_command": "SET sql_mode='STRICT_TRANS_TABLES'"}
+#     )
+# DATABASES["default"]["ATOMIC_REQUESTS"] = True
+
 DATABASES = {
-    "default": env.db(
-        "DATABASE_URL",
-        default="mysql://root:Viswa%40135@127.0.0.1:3306/family_ledger",
-    ),
+    "default": env.db("DATABASE_URL"),   # default లేదు, password code లో ఉండదు
 }
 DATABASES["default"].setdefault("OPTIONS", {})
 if DATABASES["default"]["ENGINE"] == "django.db.backends.mysql":
@@ -93,6 +111,8 @@ if DATABASES["default"]["ENGINE"] == "django.db.backends.mysql":
         {"charset": "utf8mb4", "init_command": "SET sql_mode='STRICT_TRANS_TABLES'"}
     )
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
+DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=600)
+DATABASES["default"]["CONN_HEALTH_CHECKS"] = True
 
 # ---------------------------------------------------------------------------
 # Auth
