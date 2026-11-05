@@ -87,7 +87,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
 
 # ---------------------------------------------------------------------------
-# Database — MySQL by default; set DATABASE_URL to override.
+# Database backend is selected by DATABASE_URL (local MySQL, Render PostgreSQL).
 # ---------------------------------------------------------------------------
 # DATABASES = {
 #     "default": env.db(
@@ -149,10 +149,9 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# MySQL can't create the partial unique index behind
-# AccountHead.uniq_toplevel_head_per_family; Django still enforces it in
-# Model.full_clean(), which is where all head creation goes through.
-SILENCED_SYSTEM_CHECKS = ["models.W036"]
+# MySQL cannot create the conditional unique index; PostgreSQL can.
+if DATABASES["default"]["ENGINE"] == "django.db.backends.mysql":
+    SILENCED_SYSTEM_CHECKS = ["models.W036"]
 
 # ---------------------------------------------------------------------------
 # Crispy forms

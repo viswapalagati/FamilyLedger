@@ -1,0 +1,780 @@
+[
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$P6A05XXf0rp1T6sasEShVr$kUK7BQo9VbKN5F4MwfxCchpIiwZ+xXqIRfG2yZYbq3U=",
+    "last_login": "2026-10-28T16:25:59.933Z",
+    "is_superuser": false,
+    "email": "viswanathpalagati@gmail.com",
+    "first_name": "Viswa",
+    "last_name": "Palagati",
+    "phone": "9492186642",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-24T14:52:34.498Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$9aBZWhz7WuMHbHHgY1Sjw0$W6MkI02tx0d8+7kSkcOkKfD9p9DNzPLy0ZCJixzeXoQ=",
+    "last_login": "2026-09-24T15:01:59.661Z",
+    "is_superuser": false,
+    "email": "viswanath6642@gmail.com",
+    "first_name": "viswanath",
+    "last_name": "P",
+    "phone": "8919916618",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-24T15:00:52.678Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$M2XwLs6R2WFwMsIhshdtJa$8i5LIfh7GT4wx+VVydcsQM95iiOcAJXKqzEXyCIQjMA=",
+    "last_login": "2026-10-02T03:07:22.054Z",
+    "is_superuser": false,
+    "email": "viswanathpalagati1@gmail.com",
+    "first_name": "Viswa",
+    "last_name": "P",
+    "phone": "9492186642",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-02T03:00:57.765Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$QTQeXksEpDvwJR6nOpPef5$G+2oPuOM309TvoawPo/GULtdHJ5B4m19VcuSmE4hkT0=",
+    "last_login": null,
+    "is_superuser": false,
+    "email": "tannu@gmail.com",
+    "first_name": "Tannu",
+    "last_name": "",
+    "phone": "8092156248",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-10T02:46:49.297Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$8Lw5H5C7pcYmkacbVzJV9i$8m6xURfhcTT1miohTKChPyADrMucIhCMafVQ+buhdbY=",
+    "last_login": "2026-10-13T02:07:53.197Z",
+    "is_superuser": false,
+    "email": "hyma66@gmail.com",
+    "first_name": "Hyma",
+    "last_name": "M",
+    "phone": "9966108152",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-13T02:07:52.349Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$NjoN7fw6eMGfHZlUsUlJE6$upccNlSx+yqdbtnHL3hOEEdpl5uF73d8OBJd6zC5A9k=",
+    "last_login": null,
+    "is_superuser": false,
+    "email": "viswa@gmail.com",
+    "first_name": "Viswa",
+    "last_name": "",
+    "phone": "8919916618",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-13T02:09:13.936Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$ErD5AV21x5yRhlCWnxRYRe$BFaDAOMpeTWh2WL1/UdwaoeirFLW8T/CcOF+rAkqN7A=",
+    "last_login": null,
+    "is_superuser": false,
+    "email": "siva@gmail.com",
+    "first_name": "Siva",
+    "last_name": "",
+    "phone": "9642188514",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-14T13:58:17.750Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$ok19XxrHMOY4ExIV1EZ6Nr$66RU8Z6IRfpOC3seVRzNUd23CKWyeeeyi7fludVsBag=",
+    "last_login": null,
+    "is_superuser": false,
+    "email": "pravin1@gmail.com",
+    "first_name": "Pravin",
+    "last_name": "",
+    "phone": "8919916618",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-14T15:19:22.035Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$oZ4jAUYGQctJVEfYi8ImpA$U5meUppS6hkA1mBfL33HFtQxUv/tWv214S+BLawVVJY=",
+    "last_login": "2026-10-23T03:34:23.013Z",
+    "is_superuser": true,
+    "email": "Viswanath@gmail.com",
+    "first_name": "",
+    "last_name": "",
+    "phone": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-10-23T02:27:31.822Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "families.family",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-09-24T14:52:35.550Z",
+    "updated_at": "2026-10-15T02:14:10.280Z",
+    "name": "Myfamily",
+    "financial_year_start_month": 4,
+    "created_by": 1
+  }
+},
+{
+  "model": "families.family",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-09-24T15:00:53.757Z",
+    "updated_at": "2026-09-24T15:00:53.757Z",
+    "name": "MyFamily",
+    "financial_year_start_month": 4,
+    "created_by": 2
+  }
+},
+{
+  "model": "families.family",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-10-02T03:00:58.456Z",
+    "updated_at": "2026-10-02T03:00:58.456Z",
+    "name": "NewFamily",
+    "financial_year_start_month": 4,
+    "created_by": 3
+  }
+},
+{
+  "model": "families.family",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-10-13T02:07:53.176Z",
+    "updated_at": "2026-10-13T02:07:53.176Z",
+    "name": "Myfamily",
+    "financial_year_start_month": 4,
+    "created_by": 7
+  }
+},
+{
+  "model": "families.familymember",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-09-24T14:52:35.590Z",
+    "updated_at": "2026-10-10T03:25:44.285Z",
+    "family": 1,
+    "user": [
+      "viswanathpalagati@gmail.com"
+    ],
+    "full_name": "Viswanath Palagati",
+    "email": "viswanathpalagati@gmail.com",
+    "phone": "9492186642",
+    "date_of_birth": null,
+    "relationship": "father",
+    "has_login": true,
+    "is_family_admin": true,
+    "status": "active",
+    "added_by": 1
+  }
+},
+{
+  "model": "families.familymember",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-09-24T15:00:53.757Z",
+    "updated_at": "2026-09-24T15:00:53.757Z",
+    "family": 2,
+    "user": [
+      "viswanath6642@gmail.com"
+    ],
+    "full_name": "viswanath P",
+    "email": "viswanath6642@gmail.com",
+    "phone": "8919916618",
+    "date_of_birth": null,
+    "relationship": "self",
+    "has_login": true,
+    "is_family_admin": true,
+    "status": "active",
+    "added_by": 2
+  }
+},
+{
+  "model": "families.familymember",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-10-02T03:00:58.459Z",
+    "updated_at": "2026-10-02T03:00:58.459Z",
+    "family": 3,
+    "user": [
+      "viswanathpalagati1@gmail.com"
+    ],
+    "full_name": "Viswa P",
+    "email": "viswanathpalagati1@gmail.com",
+    "phone": "9492186642",
+    "date_of_birth": null,
+    "relationship": "self",
+    "has_login": true,
+    "is_family_admin": true,
+    "status": "active",
+    "added_by": 3
+  }
+},
+{
+  "model": "families.familymember",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-10-08T03:21:03.033Z",
+    "updated_at": "2026-10-14T15:19:22.727Z",
+    "family": 1,
+    "user": [
+      "pravin1@gmail.com"
+    ],
+    "full_name": "Pravin",
+    "email": "pravin1@gmail.com",
+    "phone": "8919916618",
+    "date_of_birth": null,
+    "relationship": "son",
+    "has_login": true,
+    "is_family_admin": false,
+    "status": "active",
+    "added_by": 1
+  }
+},
+{
+  "model": "families.familymember",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-10-08T03:23:25.703Z",
+    "updated_at": "2026-10-15T02:21:20.365Z",
+    "family": 1,
+    "user": null,
+    "full_name": "Pravin",
+    "email": "pravin@gmail.com",
+    "phone": "8919916618",
+    "date_of_birth": null,
+    "relationship": "self",
+    "has_login": false,
+    "is_family_admin": false,
+    "status": "inactive",
+    "added_by": 1
+  }
+},
+{
+  "model": "families.familymember",
+  "pk": 6,
+  "fields": {
+    "created_at": "2026-10-10T02:46:49.986Z",
+    "updated_at": "2026-10-10T02:46:49.986Z",
+    "family": 1,
+    "user": [
+      "tannu@gmail.com"
+    ],
+    "full_name": "Tannu",
+    "email": "tannu@gmail.com",
+    "phone": "8092156248",
+    "date_of_birth": "2001-06-09",
+    "relationship": "sister",
+    "has_login": true,
+    "is_family_admin": false,
+    "status": "active",
+    "added_by": 1
+  }
+},
+{
+  "model": "families.familymember",
+  "pk": 7,
+  "fields": {
+    "created_at": "2026-10-13T02:07:53.180Z",
+    "updated_at": "2026-10-13T02:07:53.180Z",
+    "family": 4,
+    "user": [
+      "hyma66@gmail.com"
+    ],
+    "full_name": "Hyma M",
+    "email": "hyma66@gmail.com",
+    "phone": "9966108152",
+    "date_of_birth": null,
+    "relationship": "self",
+    "has_login": true,
+    "is_family_admin": true,
+    "status": "active",
+    "added_by": 7
+  }
+},
+{
+  "model": "families.familymember",
+  "pk": 8,
+  "fields": {
+    "created_at": "2026-10-13T02:09:14.676Z",
+    "updated_at": "2026-10-13T02:09:14.676Z",
+    "family": 4,
+    "user": [
+      "viswa@gmail.com"
+    ],
+    "full_name": "Viswa",
+    "email": "viswa@gmail.com",
+    "phone": "8919916618",
+    "date_of_birth": null,
+    "relationship": "brother",
+    "has_login": true,
+    "is_family_admin": false,
+    "status": "active",
+    "added_by": 7
+  }
+},
+{
+  "model": "families.familymember",
+  "pk": 9,
+  "fields": {
+    "created_at": "2026-10-14T13:58:18.499Z",
+    "updated_at": "2026-10-14T13:58:18.499Z",
+    "family": 1,
+    "user": [
+      "siva@gmail.com"
+    ],
+    "full_name": "Siva",
+    "email": "siva@gmail.com",
+    "phone": "9642188514",
+    "date_of_birth": null,
+    "relationship": "brother",
+    "has_login": true,
+    "is_family_admin": false,
+    "status": "active",
+    "added_by": 1
+  }
+},
+{
+  "model": "families.familymember",
+  "pk": 10,
+  "fields": {
+    "created_at": "2026-10-23T03:22:19.402Z",
+    "updated_at": "2026-10-23T03:22:19.402Z",
+    "family": 1,
+    "user": [
+      "Viswanath@gmail.com"
+    ],
+    "full_name": "Hyma M",
+    "email": "hyma66@gmail.com",
+    "phone": "9865152516",
+    "date_of_birth": null,
+    "relationship": "sister",
+    "has_login": false,
+    "is_family_admin": false,
+    "status": "active",
+    "added_by": 1
+  }
+},
+{
+  "model": "ledger.accounthead",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-10-06T02:05:06.828Z",
+    "updated_at": "2026-10-14T14:02:27.879Z",
+    "family": 1,
+    "name": "Raghu",
+    "kind": "expense",
+    "parent": null,
+    "created_by": 1,
+    "is_archived": false
+  }
+},
+{
+  "model": "ledger.accounthead",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-10-06T02:05:56.123Z",
+    "updated_at": "2026-10-06T02:10:08.513Z",
+    "family": 1,
+    "name": "Priya",
+    "kind": "expense",
+    "parent": null,
+    "created_by": 1,
+    "is_archived": false
+  }
+},
+{
+  "model": "ledger.accounthead",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-10-06T02:06:11.410Z",
+    "updated_at": "2026-10-06T02:06:11.410Z",
+    "family": 1,
+    "name": "Shivam",
+    "kind": "expense",
+    "parent": null,
+    "created_by": 1,
+    "is_archived": false
+  }
+},
+{
+  "model": "ledger.accounthead",
+  "pk": 6,
+  "fields": {
+    "created_at": "2026-10-10T03:27:32.429Z",
+    "updated_at": "2026-10-10T03:27:32.429Z",
+    "family": 1,
+    "name": "Viswanath Palagati",
+    "kind": "income",
+    "parent": 2,
+    "created_by": 1,
+    "is_archived": false
+  }
+},
+{
+  "model": "ledger.accounthead",
+  "pk": 7,
+  "fields": {
+    "created_at": "2026-10-14T13:49:53.172Z",
+    "updated_at": "2026-10-14T13:50:37.864Z",
+    "family": 1,
+    "name": "Priya",
+    "kind": "expense",
+    "parent": 5,
+    "created_by": 1,
+    "is_archived": false
+  }
+},
+{
+  "model": "ledger.accounthead",
+  "pk": 8,
+  "fields": {
+    "created_at": "2026-10-28T16:36:15.092Z",
+    "updated_at": "2026-10-28T16:36:15.093Z",
+    "family": 1,
+    "name": "Pavan",
+    "kind": "income",
+    "parent": 6,
+    "created_by": 1,
+    "is_archived": false
+  }
+},
+{
+  "model": "ledger.budget",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-10-28T16:31:28.141Z",
+    "updated_at": "2026-10-28T16:31:28.141Z",
+    "family": 1,
+    "account_head": 2,
+    "year": 2026,
+    "month": 10,
+    "amount": "2000.00",
+    "created_by": 1
+  }
+},
+{
+  "model": "ledger.savingsgoal",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-10-28T17:14:01.952Z",
+    "updated_at": "2026-10-28T17:14:01.952Z",
+    "family": 1,
+    "name": "Viswanath Palagati",
+    "description": "Savings",
+    "target_amount": "50000.00",
+    "target_date": "2026-12-30",
+    "created_by": 1
+  }
+},
+{
+  "model": "ledger.goalcontribution",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-10-28T17:14:17.522Z",
+    "updated_at": "2026-10-28T17:14:17.522Z",
+    "goal": 1,
+    "family": 1,
+    "member": 1,
+    "amount": "5000.00",
+    "contributed_on": "2026-10-28",
+    "note": ""
+  }
+},
+{
+  "model": "ledger.transaction",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-10-13T02:53:43.308Z",
+    "updated_at": "2026-10-13T02:53:43.308Z",
+    "family": 1,
+    "member": 1,
+    "recorded_by": 1,
+    "txn_type": "income",
+    "account_head": 6,
+    "amount": "10000.00",
+    "occurred_at": "2026-10-13T02:43:00Z",
+    "occurred_date": "2026-10-13",
+    "description": "",
+    "merchant_or_source": "Business",
+    "payment_method": "cash",
+    "bank_account": null,
+    "is_recurring": false,
+    "recurring_template": null,
+    "attachment": ""
+  }
+},
+{
+  "model": "ledger.transaction",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-10-13T02:54:23.093Z",
+    "updated_at": "2026-10-15T02:33:04.486Z",
+    "family": 1,
+    "member": 5,
+    "recorded_by": 1,
+    "txn_type": "expense",
+    "account_head": 4,
+    "amount": "1200.00",
+    "occurred_at": "2026-10-13T02:54:00Z",
+    "occurred_date": "2026-10-13",
+    "description": "",
+    "merchant_or_source": "Supermarket",
+    "payment_method": "cash",
+    "bank_account": null,
+    "is_recurring": false,
+    "recurring_template": null,
+    "attachment": ""
+  }
+},
+{
+  "model": "ledger.transaction",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-10-13T02:57:10.887Z",
+    "updated_at": "2026-10-13T02:57:10.887Z",
+    "family": 1,
+    "member": 6,
+    "recorded_by": 1,
+    "txn_type": "income",
+    "account_head": 2,
+    "amount": "25000.00",
+    "occurred_at": "2026-10-13T02:56:00Z",
+    "occurred_date": "2026-10-13",
+    "description": "",
+    "merchant_or_source": "Business",
+    "payment_method": "cash",
+    "bank_account": null,
+    "is_recurring": false,
+    "recurring_template": null,
+    "attachment": ""
+  }
+},
+{
+  "model": "ledger.transaction",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-10-14T13:57:02.743Z",
+    "updated_at": "2026-10-15T02:32:44.620Z",
+    "family": 1,
+    "member": 4,
+    "recorded_by": 1,
+    "txn_type": "income",
+    "account_head": 6,
+    "amount": "38000.00",
+    "occurred_at": "2026-10-14T13:56:00Z",
+    "occurred_date": "2026-10-14",
+    "description": "",
+    "merchant_or_source": "Business",
+    "payment_method": "cash",
+    "bank_account": null,
+    "is_recurring": false,
+    "recurring_template": null,
+    "attachment": ""
+  }
+},
+{
+  "model": "ledger.transaction",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-10-15T02:32:21.630Z",
+    "updated_at": "2026-10-15T02:32:21.630Z",
+    "family": 1,
+    "member": 9,
+    "recorded_by": 1,
+    "txn_type": "income",
+    "account_head": 6,
+    "amount": "65000.00",
+    "occurred_at": "2026-10-15T02:31:00Z",
+    "occurred_date": "2026-10-15",
+    "description": "",
+    "merchant_or_source": "Salary",
+    "payment_method": "cash",
+    "bank_account": null,
+    "is_recurring": false,
+    "recurring_template": null,
+    "attachment": ""
+  }
+},
+{
+  "model": "ledger.transaction",
+  "pk": 6,
+  "fields": {
+    "created_at": "2026-10-15T02:34:12.083Z",
+    "updated_at": "2026-10-15T02:34:12.083Z",
+    "family": 1,
+    "member": 5,
+    "recorded_by": 1,
+    "txn_type": "expense",
+    "account_head": 7,
+    "amount": "1000.00",
+    "occurred_at": "2026-10-15T02:33:00Z",
+    "occurred_date": "2026-10-15",
+    "description": "",
+    "merchant_or_source": "Medical",
+    "payment_method": "cash",
+    "bank_account": null,
+    "is_recurring": false,
+    "recurring_template": null,
+    "attachment": ""
+  }
+},
+{
+  "model": "ledger.recurringtemplate",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-10-14T14:42:53.070Z",
+    "updated_at": "2026-10-14T14:42:53.070Z",
+    "family": 1,
+    "member": 9,
+    "recorded_by": 1,
+    "txn_type": "income",
+    "account_head": 6,
+    "amount": "1999.87",
+    "merchant_or_source": "phone bill",
+    "description": "",
+    "payment_method": "cash",
+    "bank_account": null,
+    "frequency": "monthly",
+    "start_date": "2026-11-14",
+    "end_date": null,
+    "next_run_date": "2026-11-14",
+    "is_active": true
+  }
+},
+{
+  "model": "assets.bankaccount",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-10-13T01:54:13.176Z",
+    "updated_at": "2026-10-14T13:51:30.176Z",
+    "family": 1,
+    "owner": 1,
+    "registered_by": 1,
+    "name": "Viswanath Palagati",
+    "notes": "",
+    "is_active": true,
+    "bank_name": "SBI",
+    "account_holder_name": "Viswanath",
+    "account_number": "33481728345",
+    "account_type": "current",
+    "ifsc": "",
+    "branch_name": "",
+    "opening_balance": "0.00",
+    "current_balance": "0.00",
+    "currency": "INR"
+  }
+},
+{
+  "model": "assets.bankaccount",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-10-13T01:55:09.636Z",
+    "updated_at": "2026-10-13T01:55:09.636Z",
+    "family": 1,
+    "owner": 1,
+    "registered_by": 1,
+    "name": "Raghu",
+    "notes": "",
+    "is_active": true,
+    "bank_name": "ICICI",
+    "account_holder_name": "Raghu",
+    "account_number": "220587511255",
+    "account_type": "savings",
+    "ifsc": "",
+    "branch_name": "",
+    "opening_balance": "0.00",
+    "current_balance": "0.00",
+    "currency": "INR"
+  }
+},
+{
+  "model": "assets.digitalasset",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-10-15T02:49:55.271Z",
+    "updated_at": "2026-10-15T02:49:55.271Z",
+    "family": 1,
+    "owner": 1,
+    "registered_by": 1,
+    "name": "Raghu",
+    "notes": "",
+    "is_active": true,
+    "asset_type": "crypto",
+    "provider_or_platform": "ABC",
+    "identifier": "",
+    "invested_amount": null,
+    "current_value": "50000.00",
+    "valuation_date": null,
+    "units": null,
+    "maturity_date": null
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2026-10-23T03:22:19.406Z",
+    "user": [
+      "Viswanath@gmail.com"
+    ],
+    "content_type": [
+      "families",
+      "familymember"
+    ],
+    "object_id": "10",
+    "object_repr": "Hyma M",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+}
+]
